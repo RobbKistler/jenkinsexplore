@@ -65,7 +65,12 @@ try {
     }
 } catch(err) {
    echo("SEND SLACK HERE")
+   message = """
+${env.CHANGE_AUTHOR}: <${env.CHANGE_URL}|PR: ${env.CHANGE_ID}> ${env.CHANGE_TITLE}
+FAILED - See <${env.BUILD_URL}/console|the Jenkins console for job ${env.BUILD_ID}>
+"""
    echo("Error: ${err}")
-   //throw err
+   echo("Slack message: ${message}")
+   throw err
 }
 
