@@ -65,6 +65,7 @@ try {
     }
 } catch(err) {
    echo("SEND SLACK HERE")
-   throw err
+   echo("Error: ${err}")
+   //throw err
 }
 
