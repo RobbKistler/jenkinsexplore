@@ -20,7 +20,9 @@ def testStepName(config) {
 
 def testStepBody(config) {
   { ->
-    sh("make DISTRO=${config.distro} TESTNAME=E2E-CI-${BRANCH_NAME}-BUILD-${BUILD_ID} AWS_KEY_NAME=docker-qa ci")
+    sh("echo make DISTRO=${config.distro} TESTNAME=E2E-CI-${BRANCH_NAME}-BUILD-${BUILD_ID} AWS_KEY_NAME=docker-qa ci")
+    if (config.distro == 'centos')
+      sh("blah")
   }
 }
 
@@ -31,11 +33,11 @@ def testStep(config) {
 }
 
 // Test configs to run for PR builds
-def matrix = [[distro:'ubuntu']]
+def matrix = [[distro:'ubuntu'], [distro:'centos']]
 
 // Aditional test configs for merges to master branch
 if (isMasterBranch()) {
-  matrix << [[distro:'centos']]
+  matrix += [[distro:'centos']]
   // Just examples to illustrate use case
   // matrix << [[distro:'centos'  ],
   //            [distro:'debian'  ],
@@ -49,14 +51,20 @@ for (config in matrix) {
   steps << testStep(config)
 }
 
-stage('build') {
-  // TODO: checkout scm, build and push e2e docker image in a wrappedNode
+try {
+    stage('build') {
+        // TODO: checkout scm, build and push e2e docker image in a wrappedNode
+    }
+
+    stage('test') {
+        node() {
+            // TODO: move checkout to 'build' stag
+            checkout scm
+                parallel(steps) 
+        }
+    }
+} catch(err) {
+   echo("SEND SLACK HERE")
+   throw err
 }
 
-stage('test') {
-  node() {
-    // TODO: move checkout to 'build' stag
-    checkout scm
-    parallel(steps) 
-  }
-}
