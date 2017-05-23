@@ -54,7 +54,7 @@ stage('build') {
 }
 
 stage('test') {
-  wrappedNode(label: 'ubuntu && ec2') {
+  node() {
     // TODO: move checkout to 'build' stag
     checkout scm
     parallel(steps) 
