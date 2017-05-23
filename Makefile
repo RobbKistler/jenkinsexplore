@@ -7,3 +7,4 @@ all: dist
 dist: 
 	mkdir -p $@
 
+ci: all
