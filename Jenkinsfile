@@ -21,6 +21,7 @@ def testStepName(config) {
 def testStepBody(config) {
   { ->
     sh("echo make DISTRO=${config.distro} TESTNAME=E2E-CI-${BRANCH_NAME}-BUILD-${BUILD_ID} AWS_KEY_NAME=docker-qa ci")
+    sh("env")
     if (config.distro == 'centos')
       sh("blah")
   }
@@ -71,6 +72,7 @@ FAILED - See <${env.BUILD_URL}/console|the Jenkins console for job ${env.BUILD_I
 """
    echo("Error: ${err}")
    echo("Slack message: ${message}")
+
    throw err
 }
 
