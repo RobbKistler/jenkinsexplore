@@ -1,6 +1,14 @@
 #!/usr/bin/env groovy
 
-properties([buildDiscarder(daysToKeepStr: '30'), pipelineTriggers([cron('1 * * * *')])])
+jobProperties = [buildDiscarder(daysToKeepStr: '30')]
+
+if (isMasterBranch()) {
+  jobProperties << pipelineTriggers([cron('* * * * *')])
+}
+
+println("PROPERTIES: ${jobProperties}")
+
+properties(jobProperties)
 
 def isMasterBranch() {
   env.BRANCH_NAME == 'master'
@@ -23,7 +31,7 @@ def testStepBody(config) {
     sh("echo make DISTRO=${config.distro} TESTNAME=E2E-CI-${BRANCH_NAME}-BUILD-${BUILD_ID} AWS_KEY_NAME=docker-qa ci")
     sh("env")
     if (config.distro == 'centos')
-      sh("blah")
+      sh("echo This is centos")
   }
 }
 
