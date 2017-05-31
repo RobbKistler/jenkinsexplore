@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+def causes = currentBuild.rawBuild.getCauses()
+println("CAUSES: ${causes}")
 jobProperties = [buildDiscarder(daysToKeepStr: '30')]
 
 if (isMasterBranch()) {
