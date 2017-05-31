@@ -2,11 +2,13 @@
 
 def causes = currentBuild.rawBuild.getCauses()
 println("CAUSES: ${causes}")
+causeDescription = currentBuild.rawBuild.getCause(hudson.model.Cause$TimerTrigger.TimerTriggerCause).shortDescription
+println("CAUSE DESCRIPTION: ${causeDescription}")
 jobProperties = [buildDiscarder(daysToKeepStr: '30')]
 
 
 if (isMasterBranch()) {
-//  jobProperties << pipelineTriggers([cron('* * * * *')])
+  jobProperties << pipelineTriggers([cron('* * * * *')])
 }
 
 println("PROPERTIES: ${jobProperties}")
