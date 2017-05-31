@@ -3,7 +3,7 @@
 jobProperties = [buildDiscarder(daysToKeepStr: '30')]
 
 if (isMasterBranch()) {
-  //jobProperties << pipelineTriggers([cron('* * * * *')])
+  jobProperties << pipelineTriggers([cron('* * * * *')])
 }
 
 println("PROPERTIES: ${jobProperties}")
@@ -14,6 +14,8 @@ def isMasterBranch() {
   env.BRANCH_NAME == 'master'
 }
 
+println("DESCRIPTION: ${currentBuild.description}")
+println("DISPLAY: ${currentBuild.displayName}")
 /*
 def awsCredentials = [[$class: 'AmazonWebServicesCredentialsBinding',
   accessKeyVariable: 'AWS_ACCESS_KEY_ID',
