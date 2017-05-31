@@ -2,7 +2,7 @@
 
 def causes = currentBuild.rawBuild.getCauses()
 println("CAUSES: ${causes}")
-causeDescription = currentBuild.rawBuild.getCause(hudson.model.Cause$TimerTrigger.TimerTriggerCause).shortDescription
+@NonCPS causeDescription = currentBuild.rawBuild.getCause(hudson.model.Cause$TimerTrigger.TimerTriggerCause).shortDescription
 println("CAUSE DESCRIPTION: ${causeDescription}")
 jobProperties = [buildDiscarder(daysToKeepStr: '30')]
 
