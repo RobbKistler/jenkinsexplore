@@ -3,7 +3,7 @@
 jobProperties = [buildDiscarder(daysToKeepStr: '30')]
 
 if (isMasterBranch()) {
-  jobProperties << pipelineTriggers([cron('* * * * *')])
+//  jobProperties << pipelineTriggers([cron('* * * * *')])
 }
 
 println("PROPERTIES: ${jobProperties}")
