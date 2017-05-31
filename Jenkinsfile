@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-properties([buildDiscarder(daysToKeepStr: '30')])
+properties([buildDiscarder(daysToKeepStr: '30'), pipelineTriggers([cron('1 * * * *')])])
 
 def isMasterBranch() {
   env.BRANCH_NAME == 'master'
