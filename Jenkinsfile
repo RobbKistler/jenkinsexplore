@@ -70,6 +70,13 @@ for (config in matrix) {
 try {
     stage('build') {
         // TODO: checkout scm, build and push e2e docker image in a wrappedNode
+        myFile = new File("${env.WORKSPACE}/somefile}")
+        if (file.exists() && file.length() > 0) {
+          echo("File is non-zero")
+        } else {
+          echo("File is missing or zero")
+        }
+
     }
 
     stage('test') {
